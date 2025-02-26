@@ -90,7 +90,7 @@ const RegisterPage = () => {
   return (
     <div>
       <div className="w-[90%] mx-auto mt-10">
-        <Link to={"/"}>
+        <Link to={"/register-page"}>
           <img src={Logo} alt="" />
         </Link>
         <div className="flex items-center flex-row-reverse justify-between gap-20">

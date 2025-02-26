@@ -45,7 +45,7 @@ const SetPassword = () => {
       const { data: users } = await axios.get(
         "https://67aec39a9e85da2f020e488f.mockapi.io/user_Info"
       );
-      const user = users.find((user) => user.email === email);
+      const user = users.find((user) => user.Email_address === email);
 
       if (user) {
         await axios.put(

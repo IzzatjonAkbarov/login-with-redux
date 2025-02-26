@@ -45,7 +45,7 @@ const ForgotPassword = () => {
   return (
     <div>
       <div className="w-[90%] mx-auto mt-10">
-        <Link to={"/"}>
+        <Link to={"/forgot-password"}>
           <img src={Logo} alt="Logo" />
         </Link>
         <div className="flex items-center justify-between mt-10 gap-20">
