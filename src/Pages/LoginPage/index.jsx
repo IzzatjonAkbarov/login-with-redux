@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../../assets/images/Logo.png";
-import LoginImg from "../../assets/images/LoginImg.png";
-import facebook from "../../assets/icons/facebook.svg";
-import google from "../../assets/icons/google.svg";
-import apple from "../../assets/icons/apple.svg";
+import Cookies from "js-cookie";
+import axios from "axios";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Card,
   CardContent,
@@ -19,15 +18,17 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import Cookies from "js-cookie";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useDispatch, useSelector } from "react-redux";
 import { loginApp } from "../../redux/login";
-import axios from "axios";
 
+////images
+import Logo from "../../assets/images/Logo.png";
+import LoginImg from "../../assets/images/LoginImg.png";
+import facebook from "../../assets/icons/facebook.svg";
+import google from "../../assets/icons/google.svg";
+import apple from "../../assets/icons/apple.svg";
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [alldata, setAllData] = useState([]);
@@ -38,30 +39,25 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Redirect if user is already logged in
+  const { data, user } = useSelector((state) => state.loginApp);
+
   useEffect(() => {
     if (token) {
       navigate("/");
     }
-  }, [token, navigate]);
+  }, [token]);
 
-  // Fetch user data
   useEffect(() => {
-    setLoading(true);
     axios
       .get("https://67aec39a9e85da2f020e488f.mockapi.io/user_Info")
       .then((res) => {
         setAllData(res.data);
-        setLoading(false);
       })
       .catch((err) => {
         setError("Failed to fetch user data. Please try again later.");
-        setOpenSnackbar(true);
-        setLoading(false);
       });
   }, []);
 
-  // Form validation schema
   const schema = z.object({
     email: z.string().email("Invalid email!").min(1, "Email is required!"),
     password: z.string().min(6, "Password must be at least 6 characters long!"),
@@ -74,16 +70,18 @@ const LoginPage = () => {
   } = useForm({
     resolver: zodResolver(schema),
   });
+  console.log(user);
 
   const onSubmit = (data) => {
-    const user = alldata.find(
+    const userinfo = alldata.find(
       (value) =>
         value.Email_Adress === data.email && value.Password === data.password
     );
 
-    if (user) {
-      Cookies.set("user", JSON.stringify(user), { expires: 1 });
-      dispatch(loginApp(user));
+    if (userinfo) {
+      Cookies.set("user", JSON.stringify(userinfo), { expires: 1 });
+      dispatch(loginApp(userinfo));
+
       navigate("/");
     } else {
       setError("Invalid email or password!");

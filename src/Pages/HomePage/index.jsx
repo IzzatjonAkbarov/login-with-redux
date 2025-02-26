@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
+import { useSelector } from "react-redux";
 const headerStyles = {
   backgroundColor: "#f8f9fa",
   padding: "20px",
@@ -9,6 +10,9 @@ const headerStyles = {
   borderBottom: "1px solid #dee2e6",
 };
 const HomePage = () => {
+  const { data, user } = useSelector((state) => state.loginApp);
+  console.log(user);
+
   const token = Cookies.get("user");
   const navigate = useNavigate();
   useEffect(() => {

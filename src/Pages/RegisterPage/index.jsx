@@ -215,6 +215,7 @@ const RegisterPage = () => {
                       }}
                     />
                     {/* Terms Agreement */}
+
                     <FormControlLabel
                       control={<Checkbox />}
                       label={

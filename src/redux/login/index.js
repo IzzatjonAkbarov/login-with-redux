@@ -5,16 +5,16 @@ const initialState = {
   isLoggedIn: false,
   userInfo: null,
   error: null,
+  email: "",
 };
 
 const loginSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
-    // Action to handle login
     loginApp(state, { payload }) {
       console.log("Payload:", payload);
-      state.user = payload; // Store the logged-in user data
+      state.user = payload;
       state.isLoggedIn = true; // Update login status
       state.error = null; // Clear any previous errors
     },
@@ -29,11 +29,16 @@ const loginSlice = createSlice({
       state.error = payload; // Store the error message
       state.isLoggedIn = false; // Ensure login status is false
     },
+
+    editingPassword(state, { payload }) {
+      state.email = payload;
+    },
   },
 });
 
 // Export actions
-export const { loginApp, logoutApp, loginError } = loginSlice.actions;
+export const { loginApp, logoutApp, loginError, editingPassword } =
+  loginSlice.actions;
 
 // Export reducer
 export default loginSlice.reducer;
