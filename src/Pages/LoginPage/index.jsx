@@ -29,6 +29,7 @@ import LoginImg from "../../assets/images/LoginImg.png";
 import facebook from "../../assets/icons/facebook.svg";
 import google from "../../assets/icons/google.svg";
 import apple from "../../assets/icons/apple.svg";
+import { toast } from "react-toastify";
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [alldata, setAllData] = useState([]);
@@ -81,11 +82,10 @@ const LoginPage = () => {
     if (userinfo) {
       Cookies.set("user", JSON.stringify(userinfo), { expires: 1 });
       dispatch(loginApp(userinfo));
-
+      toast.success("Login successful");
       navigate("/");
     } else {
-      setError("Invalid email or password!");
-      setOpenSnackbar(true);
+      toast.error("Invalid email or password. Please try again.");
     }
   };
 
@@ -171,24 +171,22 @@ const LoginPage = () => {
                       bgcolor: "#6C63FF",
                       "&:hover": { bgcolor: "#6C63FF90" },
                     }}
-                    className="h-14 text-base normal-case">
+                    className="h-14 text-base normal-case ">
                     {loading ? <CircularProgress size={24} /> : "Login"}
                   </Button>
 
-                  {/* Sign Up */}
-                  <p className="text-center text-sm">
+                  <p className="text-center text-sm mt-4">
                     Don't have an account?{" "}
                     <Link to="/register" className="text-[#FF725E]">
                       Sign up
                     </Link>
                   </p>
 
-                  {/* Divider */}
                   <Divider className="my-4">
                     <span className="text-xs text-gray-500">Or login with</span>
                   </Divider>
+                  <br />
 
-                  {/* Social Login */}
                   <div className="grid grid-cols-3 gap-4">
                     <Button variant="outlined" className="h-14 border-gray-300">
                       <img src={facebook} alt="Facebook" />
@@ -206,7 +204,6 @@ const LoginPage = () => {
           </div>
         </div>
 
-        {/* Login Image */}
         <div>
           <img
             className="w-[616px] h-[616px]"
@@ -216,7 +213,6 @@ const LoginPage = () => {
         </div>
       </div>
 
-      {/* Error Snackbar */}
       <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}

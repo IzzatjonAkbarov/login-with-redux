@@ -24,6 +24,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const schema = z
   .object({
@@ -71,13 +72,16 @@ const RegisterPage = () => {
         Password: data.password,
       })
       .then((value) => {
-        setOpenSnackbar(true);
+        toast.success("Registration successful! Please login.");
+        // setOpenSnackbar(true);
         setLoading(false);
         navigate("/login-page");
       })
       .catch((err) => {
+        toast.error("Failed to register. Please try again later.");
+
         setError("Failed to register. Please try again later.");
-        setOpenSnackbar(true);
+        // setOpenSnackbar(true);
         setLoading(false);
       });
   };

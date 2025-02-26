@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { ChevronLeft, Visibility, VisibilityOff } from "@mui/icons-material";
 import forgotpassword from "../../assets/images/forgotpassword.png";
+import { toast } from "react-toastify";
 
 const passwordSchema = z
   .object({
@@ -52,7 +53,7 @@ const SetPassword = () => {
           `https://67aec39a9e85da2f020e488f.mockapi.io/user_Info/${user.id}`,
           { password: newPassword }
         );
-        alert("Password reset successful");
+        toast.success("Password reset successfully");
         navigate("/login-page");
       } else {
         setError("User not found");

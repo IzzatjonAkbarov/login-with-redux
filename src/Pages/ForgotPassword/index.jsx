@@ -92,7 +92,6 @@ const ForgotPassword = () => {
                     <br />
                     <br />
 
-                    {/* Submit Button */}
                     <Button
                       type="submit"
                       fullWidth
