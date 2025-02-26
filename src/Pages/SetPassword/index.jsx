@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { z } from "zod";
 import Logo from "../../assets/images/Logo.png";
+import { loginApp, editingPassword } from "../../redux/login/index";
+
 import {
   Card,
   CardContent,
@@ -35,7 +37,8 @@ const SetPassword = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const email = useSelector((state) => state.email);
+
+  const { data, user, email } = useSelector((state) => state.loginApp);
 
   const handleResetPassword = async () => {
     try {
@@ -46,14 +49,18 @@ const SetPassword = () => {
       const { data: users } = await axios.get(
         "https://67aec39a9e85da2f020e488f.mockapi.io/user_Info"
       );
-      const user = users.find((user) => user.Email_address === email);
+
+      const user = users.find((user) => user.Email_Adress === email);
 
       if (user) {
         await axios.put(
           `https://67aec39a9e85da2f020e488f.mockapi.io/user_Info/${user.id}`,
-          { password: newPassword }
+          { Password: newPassword }
         );
+
         toast.success("Password reset successfully");
+        console.log(email);
+
         navigate("/login-page");
       } else {
         setError("User not found");

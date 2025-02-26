@@ -55,13 +55,10 @@ const RegisterPage = () => {
   } = useForm({
     resolver: zodResolver(schema),
   });
-  console.log(errors);
 
-  // Handle form submission
   const onSubmit = (data) => {
     setLoading(true);
     setError("");
-    console.log(data);
 
     axios
       .post("https://67aec39a9e85da2f020e488f.mockapi.io/user_Info", {
@@ -73,7 +70,7 @@ const RegisterPage = () => {
       })
       .then((value) => {
         toast.success("Registration successful! Please login.");
-        // setOpenSnackbar(true);
+
         setLoading(false);
         navigate("/login-page");
       })
@@ -86,9 +83,8 @@ const RegisterPage = () => {
       });
   };
 
-  // Handle Snackbar close
   const handleCloseSnackbar = () => {
-    setOpenSnackbar(false);
+    // setOpenSnackbar(false);
   };
 
   return (
@@ -113,7 +109,6 @@ const RegisterPage = () => {
                   </div>
 
                   <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                    {/* Name Fields */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <TextField
                         fullWidth
@@ -136,7 +131,6 @@ const RegisterPage = () => {
                         helperText={errors.lastName?.message}
                       />
                     </div>
-                    {/* Email and Phone Fields */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <TextField
                         fullWidth
@@ -159,7 +153,6 @@ const RegisterPage = () => {
                         helperText={errors.phone?.message}
                       />
                     </div>
-                    {/* Password Fields */}
                     <TextField
                       fullWidth
                       label="Password"
@@ -218,7 +211,6 @@ const RegisterPage = () => {
                         ),
                       }}
                     />
-                    {/* Terms Agreement */}
 
                     <FormControlLabel
                       control={<Checkbox />}
@@ -239,7 +231,6 @@ const RegisterPage = () => {
                         </span>
                       }
                     />
-                    {/* Create Account Button */}
                     <Button
                       type="submit"
                       fullWidth
@@ -252,7 +243,6 @@ const RegisterPage = () => {
                         "Create account"
                       )}
                     </Button>
-                    {/* Login Link */}
                     <div className="text-center">
                       <p className="text-sm">
                         Already have an account?{" "}
@@ -264,7 +254,6 @@ const RegisterPage = () => {
                         </Link>
                       </p>
                     </div>
-                    {/* Social Login Section */}
                     <div className="space-y-6">
                       <div className="relative">
                         <Divider>
@@ -306,7 +295,6 @@ const RegisterPage = () => {
         </div>
       </div>
 
-      {/* Error Snackbar */}
       <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}

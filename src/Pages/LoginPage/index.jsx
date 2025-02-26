@@ -32,7 +32,6 @@ import apple from "../../assets/icons/apple.svg";
 import { toast } from "react-toastify";
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [alldata, setAllData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -42,6 +41,7 @@ const LoginPage = () => {
 
   const { data, user } = useSelector((state) => state.loginApp);
 
+  const [alldata, setAllData] = useState([]);
   useEffect(() => {
     if (token) {
       navigate("/");
@@ -71,7 +71,6 @@ const LoginPage = () => {
   } = useForm({
     resolver: zodResolver(schema),
   });
-  console.log(user);
 
   const onSubmit = (data) => {
     const userinfo = alldata.find(
@@ -80,8 +79,7 @@ const LoginPage = () => {
     );
 
     if (userinfo) {
-      Cookies.set("user", JSON.stringify(userinfo), { expires: 1 });
-      dispatch(loginApp(userinfo));
+      dispatch(loginApp({ payload: userinfo, allData: alldata }));
       toast.success("Login successful");
       navigate("/");
     } else {
@@ -89,7 +87,6 @@ const LoginPage = () => {
     }
   };
 
-  // Handle Snackbar close
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
   };
@@ -111,7 +108,6 @@ const LoginPage = () => {
             <Card className="w-full shadow-lg">
               <CardContent className="p-8">
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                  {/* Email Input */}
                   <TextField
                     fullWidth
                     label="Email"
@@ -125,7 +121,6 @@ const LoginPage = () => {
                   <br />
                   <br />
 
-                  {/* Password Input */}
                   <TextField
                     fullWidth
                     label="Password"
@@ -148,7 +143,6 @@ const LoginPage = () => {
                     }}
                   />
 
-                  {/* Remember Me & Forgot Password */}
                   <div className="flex items-center justify-between">
                     <FormControlLabel
                       control={<Checkbox />}
@@ -161,7 +155,6 @@ const LoginPage = () => {
                     </Link>
                   </div>
 
-                  {/* Login Button */}
                   <Button
                     type="submit"
                     fullWidth

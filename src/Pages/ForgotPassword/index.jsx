@@ -13,7 +13,6 @@ import google from "../../assets/icons/google.svg";
 import apple from "../../assets/icons/apple.svg";
 import { loginApp, editingPassword } from "../../redux/login/index";
 
-// Zod schema for validation
 const schema = z.object({
   email: z.string().email("Please enter a valid email address"),
 });
@@ -21,9 +20,8 @@ const schema = z.object({
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data, user } = useSelector((state) => state.loginApp);
+  const { data, user, email } = useSelector((state) => state.loginApp);
 
-  // React Hook Form setup
   const {
     control,
     handleSubmit,
@@ -35,10 +33,11 @@ const ForgotPassword = () => {
     },
   });
 
-  // Form submission handler
+  console.log(email);
+
   const onSubmit = (data) => {
-    console.log("Form data submitted:", data);
     dispatch(editingPassword(data.email));
+
     navigate("/set-password");
   };
 
@@ -72,7 +71,6 @@ const ForgotPassword = () => {
                   </div>
 
                   <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                    {/* Email Input */}
                     <Controller
                       name="email"
                       control={control}
